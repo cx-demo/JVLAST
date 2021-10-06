@@ -1,15 +1,13 @@
 # This is a basic workflow to help you get started with Actions
 
-name: Checkmarx AST Scan (Push)
+name: Checkmarx AST Scan (Pull)
 
 # Controls when the workflow will run
 on:
   # Triggers the workflow on push or pull request events but only for the master branch
-  push:
+  pull_request:
+    types: [opened, reopened, synchronize] #Types specify which pull request events will trigger the workflow. For more events refer Github Actions documentation.
     branches: [ master ]
-
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -32,11 +30,3 @@ jobs:
           cx_client_id: ${{ secrets.CX_CLIENT_ID }}
           cx_client_secret: ${{ secrets.CX_CLIENT_SECRET }}
           scan_types: sast,sca,kics
-
-      # Build the JavaVulnerableLab project
-      - name: Build with Maven
-        run: mvn -B package --file pom.xml
-
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo End of Github Action!
