@@ -31,7 +31,11 @@ jobs:
           cx_tenant: asean_2021_08
           cx_client_id: ${{ secrets.CX_CLIENT_ID }}
           cx_client_secret: ${{ secrets.CX_CLIENT_SECRET }}
-          scan_types: sast,kics
+          scan_types: sast,sca,kics
+
+      # Build the JavaVulnerableLab project
+      - name: Build with Maven
+        run: mvn -B package --file pom.xml
 
       # Runs a single command using the runners shell
       - name: Run a one-line script
